@@ -2091,6 +2091,14 @@ ovn_leases_tests() {
 
         lxc delete -f c1
 
+        if hasNeededAPIExtension list_ovn_uplink_allocations; then
+            echo "==> Check OVN external addresses show on lxc network list-allocations"
+            ovn_ext_ipv4="$(lxc network get ovn-virtual-network volatile.network.ipv4.address)"
+            ovn_ext_ipv6="$(lxc network get ovn-virtual-network volatile.network.ipv6.address)"
+            lxc network list-allocations --format csv | grep -F "/1.0/networks/ovn-virtual-network,${ovn_ext_ipv4}"
+            lxc network list-allocations --format csv | grep -F "/1.0/networks/ovn-virtual-network,${ovn_ext_ipv6}"
+        fi
+
         echo "==> Ensure the instance gets static ipv4 and dynamic ipv6 leases and that they"
         echo "==> do not disappear after restart"
         lxc launch "${IMAGE}" c1 -s default -n ovn0 -d eth0,ipv4.address=10.10.11.15
