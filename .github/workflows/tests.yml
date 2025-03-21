@@ -319,7 +319,7 @@ jobs:
 
           git clone https://github.com/hamistao/lxd
           cd lxd
-          git checkout <branch-name>
+          git checkout long_device_id
           sudo apt update
           sudo apt install acl attr autoconf automake dnsmasq-base git libacl1-dev libcap-dev liblxc1 liblxc-dev libsqlite3-dev libtool libudev-dev liblz4-dev libuv1-dev make pkg-config rsync squashfs-tools tar tcl xz-utils ebtables
           command -v snap >/dev/null || sudo apt-get install snapd
